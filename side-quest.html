@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Quest: Simple Guide to Understanding Basic Coding Concepts</title>
+    <script src="https://cdn.tailwindcss.com">
+    function applyDynamicGridBackground() {
+        const gridColor = getComputedStyle(document.body).getPropertyValue('--grid-color').trim();
+        const svg = `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 0L40 20L20 40L0 20L20 0z" fill="${gridColor}" opacity="0.1"/></svg>`;
+        const encodedSvg = encodeURIComponent(svg);
+        document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("data:image/svg+xml,${encodedSvg}")`;
+    }
+
+    applyDynamicGridBackground();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        applyDynamicGridBackground();
+    });
+
+    const themeOptionsReload = document.querySelectorAll('.theme-option');
+    themeOptionsReload.forEach(option => {
+        option.addEventListener('click', () => {
+            setTimeout(() => applyDynamicGridBackground(), 100);
+        });
+    });
+
+    const themeCardsReload = document.querySelectorAll('.theme-card');
+    themeCardsReload.forEach(card => {
+        card.addEventListener('click', () => {
+            setTimeout(() => applyDynamicGridBackground(), 600);
+        });
+    });
+
+</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Press+Start+2P&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Theme Variables */
+        :root {
+            /* Default Theme (Fighting) */
+            --primary-bg: #1a0f3c;
+            --secondary-bg: #2d1faa;
+            --accent-color: #ff4444;
+            --text-color: #ffffff;
+            --heading-color: #ffd700;
+            --link-color: #ff9e4a;
+            --border-color: #ff4444;
+            --glow-color: #ff4444;
+            --highlight-color: #f00;
+            --shadow-color: rgba(255,68,68,0.5);
+            --inner-shadow-color: rgba(255,68,68,0.2);
+            --grid-color: rgba(255,255,255,0.1);
+            --font-heading: 'Press Start 2P', cursive;
+            --font-body: 'Source Sans 3', sans-serif;
+        }
+
+        /* RPG Theme */
+        [data-theme="rpg"] {
+            --primary-bg: #2b2517;
+            --secondary-bg: #463b24;
+            --accent-color: #ffd700;
+            --text-color: #e6d5a7;
+            --heading-color: #ffd700;
+            --link-color: #c7b377;
+            --border-color: #c7b377;
+            --glow-color: #ffb400;
+            --highlight-color: #c7b377;
+            --shadow-color: rgba(199,179,119,0.5);
+            --inner-shadow-color: rgba(199,179,119,0.2);
+            --grid-color: rgba(199,179,119,0.1);
+            --font-heading: 'MedievalSharp', cursive;
+            --font-body: 'Source Sans 3', sans-serif;
+        }
+
+        /* Strategy Theme */
+        [data-theme="strategy"] {
+            --primary-bg: #1a2634;
+            --secondary-bg: #2c4356;
+            --accent-color: #4a9eff;
+            --text-color: #b8d7ff;
+            --heading-color: #4a9eff;
+            --link-color: #ff9e4a;
+            --border-color: #4a9eff;
+            --glow-color: #4a9eff;
+            --highlight-color: #ff9e4a;
+            --shadow-color: rgba(74,158,255,0.5);
+            --inner-shadow-color: rgba(74,158,255,0.2);
+            --grid-color: rgba(74,158,255,0.1);
+            --font-heading: 'Source Sans 3', sans-serif;
+            --font-body: 'Source Sans 3', sans-serif;
+        }
+
+        /* Horror Theme */
+        [data-theme="horror"] {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #2b2b2b;
+            --accent-color: #ff0000;
+            --text-color: #86c5da;
+            --heading-color: #ff0000;
+            --link-color: #ff4444;
+            --border-color: #4a4a4a;
+            --glow-color: #86c5da;
+            --highlight-color: #ff4444;
+            --shadow-color: rgba(134,197,218,0.5);
+            --inner-shadow-color: rgba(134,197,218,0.2);
+            --grid-color: rgba(74,74,74,0.2);
+            --font-heading: 'MedievalSharp', cursive;
+            --font-body: 'Source Sans 3', sans-serif;
+        }
+
+        /* Adventure Theme */
+        [data-theme="adventure"] {
+            --primary-bg: #1c4c2a;
+            --secondary-bg: #2d7a43;
+            --accent-color: #f0c674;
+            --text-color: #ffffff;
+            --heading-color: #f0c674;
+            --link-color: #50c878;
+            --border-color: #f0c674;
+            --glow-color: #50c878;
+            --highlight-color: #f0c674;
+            --shadow-color: rgba(80,200,120,0.5);
+            --inner-shadow-color: rgba(80,200,120,0.2);
+            --grid-color: rgba(80,200,120,0.1);
+            --font-heading: 'Press Start 2P', cursive;
+            --font-body: 'Source Sans 3', sans-serif;
+        }
+
+        /* Theme Selector Styles */
+        .theme-selector {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .theme-button {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            text-shadow: 2px 2px 0px #000;
+            box-shadow: 
+                0 0 10px var(--shadow-color),
+                inset 0 0 20px var(--inner-shadow-color);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            width: 200px;
+            text-align: left;
+        }
+
+        .theme-button::after {
+            content: '▼';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .theme-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 200px;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            border: 2px solid var(--border-color);
+            box-shadow: 
+                0 0 10px var(--shadow-color),
+                inset 0 0 20px var(--inner-shadow-color);
+        }
+
+        .theme-options.show {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .theme-option {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-color);
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .theme-option:hover {
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--primary-bg) 100%);
+            color: var(--highlight-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        body {
+    font-family: var(--font-body);
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    position: relative;
+    overflow-x: hidden;
+    background-image: none; /* dynamically set with JS */
+}
+        
+        .font-title {
+            font-family: var(--font-heading);
+            text-shadow: 
+                0 0 10px var(--glow-color),
+                2px 2px 2px #000;
+            letter-spacing: 2px;
+            color: var(--heading-color);
+        }
+
+        .quest-card {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            border: 2px solid var(--border-color);
+            box-shadow: 
+                0 0 10px var(--shadow-color),
+                inset 0 0 20px var(--inner-shadow-color);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quest-card::before,
+        .quest-card::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            opacity: 0.5;
+        }
+
+        .quest-card::before {
+            top: 5px;
+            left: 5px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .quest-card::after {
+            bottom: 5px;
+            right: 5px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .quest-card:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 
+                0 0 20px var(--shadow-color),
+                inset 0 0 30px var(--inner-shadow-color);
+        }
+
+        .quest-card.active {
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--primary-bg) 100%);
+            border-color: var(--accent-color);
+            box-shadow: 
+                0 0 30px var(--shadow-color),
+                inset 0 0 40px var(--inner-shadow-color);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 30px var(--shadow-color), inset 0 0 40px var(--inner-shadow-color); }
+            50% { box-shadow: 0 0 50px var(--shadow-color), inset 0 0 60px var(--inner-shadow-color); }
+            100% { box-shadow: 0 0 30px var(--shadow-color), inset 0 0 40px var(--inner-shadow-color); }
+        }
+
+        .quiz-option {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            border: 2px solid var(--border-color);
+            box-shadow: 
+                0 0 10px var(--shadow-color),
+                inset 0 0 20px var(--inner-shadow-color);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            color: var(--text-color);
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .quiz-option:hover:not(:disabled) {
+            transform: scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 
+                0 0 20px var(--shadow-color),
+                inset 0 0 30px var(--inner-shadow-color);
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--primary-bg) 100%);
+        }
+
+        .quiz-option.correct {
+            background: linear-gradient(135deg, #1a4721 0%, #064e3b 100%);
+            border-color: #059669;
+            animation: victory 0.5s ease-out;
+            box-shadow: 
+                0 0 30px rgba(5,150,105,0.5),
+                inset 0 0 40px rgba(5,150,105,0.2);
+            color: #d4d4d4;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .quiz-option.incorrect {
+            background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
+            border-color: #dc2626;
+            animation: defeat 0.5s ease-out;
+            box-shadow: 
+                0 0 30px rgba(220,38,38,0.5),
+                inset 0 0 40px rgba(220,38,38,0.2);
+            opacity: 0.7;
+        }
+
+        .content-box {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            border: 2px solid var(--border-color);
+            box-shadow: 
+                0 0 20px var(--shadow-color),
+                inset 0 0 40px var(--inner-shadow-color);
+            position: relative;
+        }
+
+        .content-box::before,
+        .content-box::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--border-color);
+            opacity: 0.5;
+        }
+
+        .content-box::before {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .content-box::after {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            text-shadow: 0 0 5px var(--glow-color);
+            font-family: 'Courier New', monospace;
+            box-shadow: 
+                0 0 10px var(--shadow-color),
+                inset 0 0 20px var(--inner-shadow-color);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            background: var(--primary-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--border-color) 0%, var(--secondary-bg) 100%);
+            border: 2px solid var(--accent-color);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Victory Button and Popup Styles */
+        .victory-button {
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            text-shadow: 2px 2px 0px #000;
+            box-shadow: 
+                0 0 10px var(--shadow-color),
+                inset 0 0 20px var(--inner-shadow-color);
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            padding: 1rem 2rem;
+            border-radius: 0;
+            transition: all 0.3s;
+            margin: 2rem auto;
+            display: block;
+            width: fit-content;
+            position: relative;
+        }
+
+        .victory-button::before,
+        .victory-button::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-color);
+            opacity: 0.5;
+        }
+
+        .victory-button::before {
+            top: 5px;
+            left: 5px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .victory-button::after {
+            bottom: 5px;
+            right: 5px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .victory-button:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-color);
+            box-shadow: 
+                0 0 20px var(--shadow-color),
+                inset 0 0 30px var(--inner-shadow-color);
+        }
+
+        .victory-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+            border: 2px solid var(--border-color);
+            box-shadow: 
+                0 0 50px var(--shadow-color),
+                inset 0 0 30px var(--inner-shadow-color);
+            padding: 2rem;
+            z-index: 1000;
+            text-align: center;
+            animation: victoryAppear 0.5s ease-out;
+        }
+
+        .victory-popup::before,
+        .victory-popup::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--border-color);
+            opacity: 0.5;
+        }
+
+        .victory-popup::before {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .victory-popup::after {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .victory-popup.show {
+            display: block;
+        }
+
+        .victory-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 999;
+        }
+
+        .victory-overlay.show {
+            display: block;
+        }
+
+        @keyframes victoryAppear {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Theme Selection Screen */
+        .theme-select-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+            visibility: visible;
+        }
+
+        .theme-select-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        .theme-select-title {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--heading-color);
+            text-align: center;
+            text-shadow: 0 0 10px var(--glow-color);
+            margin-bottom: 2rem;
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            max-width: 1200px;
+            width: 90%;
+            padding: 2rem;
+        }
+
+        .theme-card {
+            position: relative;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .theme-card[data-theme="fighting"] {
+            background: linear-gradient(135deg, #1a0f3c 0%, #2d1faa 100%);
+            border: 2px solid #ff4444;
+        }
+
+        .theme-card[data-theme="rpg"] {
+            background: linear-gradient(135deg, #2b2517 0%, #463b24 100%);
+            border: 2px solid #c7b377;
+        }
+
+        .theme-card[data-theme="strategy"] {
+            background: linear-gradient(135deg, #1a2634 0%, #2c4356 100%);
+            border: 2px solid #4a9eff;
+        }
+
+        .theme-card[data-theme="horror"] {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2b2b2b 100%);
+            border: 2px solid #86c5da;
+        }
+
+        .theme-card[data-theme="adventure"] {
+            background: linear-gradient(135deg, #1c4c2a 0%, #2d7a43 100%);
+            border: 2px solid #f0c674;
+        }
+
+        .theme-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--shadow-color), inset 0 0 40px var(--inner-shadow-color);
+        }
+
+        .theme-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(255,255,255,0.1) 50%,
+                transparent 100%
+            );
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            20%, 100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .theme-card-title {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .theme-card[data-theme="fighting"] .theme-card-title { color: #ff4444; }
+        .theme-card[data-theme="rpg"] .theme-card-title { color: #c7b377; }
+        .theme-card[data-theme="strategy"] .theme-card-title { color: #4a9eff; }
+        .theme-card[data-theme="horror"] .theme-card-title { color: #86c5da; }
+        .theme-card[data-theme="adventure"] .theme-card-title { color: #f0c674; }
+
+        .theme-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .theme-card-description {
+            color: #fff;
+            font-size: 1rem;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hide main content initially */
+        .main-content {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+
+        .main-content.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Copyright Styles */
+        
+    .copyright {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        color: #fff;
+        font-family: 'Press Start 2P', cursive;
+        font-size: 0.8rem;
+        text-shadow: 2px 2px 0px #000;
+        z-index: 10000;
+        pointer-events: none;
+        margin-top: 4rem;
+    }
+    
+
+        .copyright span {
+            opacity: 0.8;
+        }
+
+        /* Links */
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        /* Strong and emphasis */
+        strong, em {
+            color: var(--accent-color);
+        }
+
+        /* Code elements */
+        code {
+            color: var(--accent-color);
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body class="min-h-screen" data-theme="fighting">
+    <!-- Theme Selection Screen -->
+    <div class="theme-select-screen" id="themeSelectScreen">
+        <h1 class="theme-select-title">Choose Your Theme</h1>
+        <div class="theme-grid">
+            <div class="theme-card" data-theme="fighting">
+                <div class="theme-card-icon">🥊</div>
+                <h2 class="theme-card-title">Fighting</h2>
+                <p class="theme-card-description">Dynamic and energetic theme with intense colors and arcade-style elements.</p>
+            </div>
+            <div class="theme-card" data-theme="rpg">
+                <div class="theme-card-icon">⚔️</div>
+                <h2 class="theme-card-title">RPG</h2>
+                <p class="theme-card-description">Medieval fantasy theme with warm, golden tones and ornate decorations.</p>
+            </div>
+            <div class="theme-card" data-theme="strategy">
+                <div class="theme-card-icon">🎯</div>
+                <h2 class="theme-card-title">Strategy</h2>
+                <p class="theme-card-description">Tactical interface with cool blues and precise, organized layout.</p>
+            </div>
+            <div class="theme-card" data-theme="horror">
+                <div class="theme-card-icon">👻</div>
+                <h2 class="theme-card-title">Horror</h2>
+                <p class="theme-card-description">Dark and mysterious theme with eerie accents and tense atmosphere.</p>
+            </div>
+            <div class="theme-card" data-theme="adventure">
+                <div class="theme-card-icon">🗺️</div>
+                <h2 class="theme-card-title">Adventure</h2>
+                <p class="theme-card-description">Nature-inspired theme with forest greens and exploration elements.</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <span>© Edgar Cardona, 2025</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Theme Selector -->
+        <div class="theme-selector">
+            <button class="theme-button" id="themeButton">Fighting</button>
+            <div class="theme-options" id="themeOptions">
+                <div class="theme-option" data-theme="fighting">Fighting 🥊</div>
+                <div class="theme-option" data-theme="rpg">RPG ⚔️</div>
+                <div class="theme-option" data-theme="strategy">Strategy 🎯</div>
+                <div class="theme-option" data-theme="horror">Horror 👻</div>
+                <div class="theme-option" data-theme="adventure">Adventure 🗺️</div>
+            </div>
+        </div>
+
+        <div class="container mx-auto p-4 md:p-8">
+            <!-- Header -->
+            <header class="text-center mb-10">
+                <h1 class="font-title text-3xl md:text-5xl text-amber-300">Side Quest</h1>
+                <p class="font-title text-lg md:text-xl text-sky-300 mt-2">A Simple Guide to Basic Coding Concepts</p>
+            </header>
+
+            <div class="flex flex-col md:flex-row gap-8">
+                <!-- Sidebar: Quest Log -->
+                <aside class="w-full md:w-1/3">
+                    <div class="sticky top-8">
+                        <h2 class="font-title text-2xl mb-4 text-center md:text-left">Quest Log</h2>
+                        <div id="quest-log" class="space-y-3">
+                            <!-- Quests will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Content: Quest Details -->
+                <main id="main-content" class="w-full md:w-2/3">
+                    <!-- Content is dynamically inserted here -->
+                </main>
+            </div>
+        </div>
+
+        <!-- Victory Button -->
+        <button id="victoryButton" class="victory-button">Complete Adventure 🏆</button>
+
+        <!-- Victory Popup -->
+        <div id="victoryOverlay" class="victory-overlay"></div>
+        <div id="victoryPopup" class="victory-popup">
+            <h2 class="font-title text-4xl text-amber-300 mb-4">🏆 VICTORY! 🏆</h2>
+            <p class="text-xl text-white mb-6">Congratulations, brave adventurer! You've completed your coding journey!</p>
+            <button id="closeVictory" class="victory-button">Continue Adventure</button>
+        </div>
+
+        <!-- Copyright in main content -->
+        <div class="copyright">
+            <span>© Edgar Cardona, 2025</span>
+        </div>
+    </div>
+
+    <script>
+        const QUEST_DATA = {
+            "welcome": {
+                title: "Your Adventure Begins!",
+                icon: '🗺️',
+                content: `
+                    <h2 class="font-title text-3xl text-amber-300 mb-4">Welcome, Adventurer!</h2>
+                    <p class="text-lg leading-relaxed mb-4">You've stumbled upon an ancient secret: the language of computers! Don't worry, you don't need to be a wizard to understand it. This guide is your map.</p>
+                    <p class="mb-6">Think of coding as learning a set of spells. Each spell (a command) tells the computer what to do. At first, it might seem strange, but soon you'll be creating your own magic!</p>
+                    <div class="bg-sky-900 border border-sky-600 p-4 rounded-lg">
+                        <p class="font-semibold">Your first challenge is simple: select a quest from your Quest Log on the left to begin your journey.</p>
+                    </div>
+                `
+            },
+            "1": {
+                title: "Magical Labeled Boxes",
+                icon: '📦',
+                content: `
+                    <h2 class="font-title text-3xl text-amber-300 mb-4">Quest: Magical Labeled Boxes</h2>
+                    <p class="text-lg leading-relaxed mb-4">In the world of code, we need places to store our treasures (like numbers, text, or true/false values). We use magical containers called <strong class="text-sky-300">variables</strong>.</p>
+                    <p class="mb-4">Imagine a box. You put a label on it, like "PlayerHealth". Then, you put something inside, like the number 100. Now, whenever you need to know the player's health, you just look for the box with that label!</p>
+                    <p class="font-semibold text-xl mb-2">Creating a Variable:</p>
+                    <div class="code-block">player_name = "Alex"</div>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li><code class="text-orange-300">player_name</code> is the <strong class="text-sky-300">label</strong> on our box.</li>
+                        <li>The <code class="text-orange-300">=</code> sign is how we <strong class="text-sky-300">put something inside</strong>.</li>
+                        <li><code class="text-orange-300">"Alex"</code> is the <strong class="text-sky-300">treasure</strong> (text data) we are storing.</li>
+                    </ul>
+                `,
+                quiz: {
+                    question: "What is the best way to think about a variable?",
+                    options: {
+                        "A": "A magic spell.",
+                        "B": "A labeled box for storing information.",
+                        "C": "A final, unchangeable command."
+                    },
+                    answer: "B"
+                }
+            },
+            "2": {
+                title: "The First Spell: 'print'",
+                icon: '📜',
+                content: `
+                    <h2 class="font-title text-3xl text-amber-300 mb-4">Quest: The First Spell</h2>
+                    <p class="text-lg leading-relaxed mb-4">Every great mage starts with a simple spell. Our first spell is called <strong class="text-sky-300">print()</strong>. It makes the computer display a message on the screen.</p>
+                    <p class="mb-4">Anything you put inside the parentheses will be shown. If you want to display text, you must wrap it in quotes.</p>
+                    <div class="code-block">print("Hello, adventurer!")</div>
+                    <p>When the computer reads this spell, it will shout: <strong class="text-lime-300">Hello, adventurer!</strong></p>
+                `,
+                quiz: {
+                    question: "Which spell do you use to make the computer display a message?",
+                    options: {
+                        "A": "shout()",
+                        "B": "display()",
+                        "C": "print()"
+                    },
+                    answer: "C"
+                }
+            },
+            "3": {
+                title: "A Fork in the Road",
+                icon: '🍴',
+                content: `
+                    <h2 class="font-title text-3xl text-amber-300 mb-4">Quest: A Fork in the Road</h2>
+                    <p class="text-lg leading-relaxed mb-4">Your adventure won't always be a straight path. Sometimes, you need to make decisions! In coding, we use <strong class="text-sky-300">if-else statements</strong> for this.</p>
+                    <p class="mb-4">It's like coming to a locked door:</p>
+                    <p class="mb-4"><strong class="text-sky-300">IF</strong> you have the key, you can open the door.</p>
+                    <p class="mb-4"><strong class="text-sky-300">ELSE</strong> (if you don't have the key), you must find another way.</p>
+                    <div class="code-block">has_key = True
+
+if has_key == True:
+    print("You open the door and proceed!")
+else:
+    print("The door is locked. You need a key.")</div>
+                    <p>In this code, since <code class="text-orange-300">has_key</code> is <code class="text-orange-300">True</code>, the computer will only print the first message.</p>
+                `,
+                quiz: {
+                    question: "In an if-else situation, when does the 'else' part happen?",
+                    options: {
+                        "A": "Always",
+                        "B": "When the 'if' condition is false.",
+                        "C": "When the 'if' condition is true."
+                    },
+                    answer: "B"
+                }
+            },
+            "4": {
+                title: "The Repeating Charm",
+                icon: '🔄',
+                content: `
+                    <h2 class="font-title text-3xl text-amber-300 mb-4">Quest: The Repeating Charm</h2>
+                    <p class="text-lg leading-relaxed mb-4">Some tasks are boring and repetitive, like chopping 5 logs of wood. Instead of writing the command 5 times, we can use a repeating charm called a <strong class="text-sky-300">loop</strong>.</p>
+                    <p class="mb-4">A loop will repeat a set of instructions as many times as you tell it to. It saves you a lot of time and effort!</p>
+                    <div class="code-block">for number in range(3):
+    print("Casting a spell...")</div>
+                    <p>This charm will cast the spell 3 times, resulting in:</p>
+                    <div class="bg-gray-800 p-2 rounded-md text-lime-300">
+                        Casting a spell...<br>
+                        Casting a spell...<br>
+                        Casting a spell...
+                    </div>
+                `,
+                quiz: {
+                    question: "What is a 'loop' used for in coding?",
+                    options: {
+                        "A": "Ending the program.",
+                        "B": "Making a one-time decision.",
+                        "C": "Repeating a block of code multiple times."
+                    },
+                    answer: "C"
+                }
+            },
+            "final": {
+                title: "The Final Challenge",
+                icon: '🏆',
+                content: `
+                    <h2 class="font-title text-3xl text-amber-300 mb-4">The Final Challenge!</h2>
+                    <p class="text-lg leading-relaxed mb-4">You've learned the basic spells! Now, you can combine them to create your own simple text-based adventure game.</p>
+                    <p class="font-semibold text-xl mb-2">Your toolkit includes:</p>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li><strong class="text-sky-300">Variables:</strong> To store the player's name, health, or location.</li>
+                        <li><strong class="text-sky-300">print():</strong> To describe the rooms and what's happening.</li>
+                        <li><strong class="text-sky-300">if-else:</strong> To handle choices like "go left" or "open chest".</li>
+                        <li><strong class="text-sky-300">Loops:</strong> To keep the game running until the player wins or loses.</li>
+                    </ul>
+                    <p class="mb-6">You are now equipped to start your own coding journey. Don't be afraid to experiment and make mistakes—that's how all great adventurers learn!</p>
+                    <div class="bg-amber-900 border border-amber-600 p-4 rounded-lg">
+                        <p class="font-bold">Congratulations on completing your first Side Quest!</p>
+                    </div>
+                `
+            }
+        };
+
+        const questLogEl = document.getElementById('quest-log');
+        const mainContentEl = document.getElementById('main-content');
+
+        // Remove all audio-related code and add victory functionality
+        const victoryButton = document.getElementById('victoryButton');
+        const victoryPopup = document.getElementById('victoryPopup');
+        const victoryOverlay = document.getElementById('victoryOverlay');
+        const closeVictory = document.getElementById('closeVictory');
+
+        victoryButton.addEventListener('click', () => {
+            victoryPopup.classList.add('show');
+            victoryOverlay.classList.add('show');
+        });
+
+        closeVictory.addEventListener('click', () => {
+            victoryPopup.classList.remove('show');
+            victoryOverlay.classList.remove('show');
+        });
+
+        victoryOverlay.addEventListener('click', () => {
+            victoryPopup.classList.remove('show');
+            victoryOverlay.classList.remove('show');
+        });
+
+        function renderQuiz(quest) {
+            if (!quest.quiz) return '';
+
+            const optionsHtml = Object.entries(quest.quiz.options).map(([key, value]) => `
+                <button class="quiz-option w-full text-left p-4 rounded-lg" data-answer="${key}">
+                    <span class="font-bold mr-2">${key}.</span>${value}
+                </button>
+            `).join('');
+
+            return `
+                <div class="mt-8 border-t-2 border-dashed border-slate-600 pt-6">
+                    <h3 class="font-title text-xl text-amber-300 mb-4">Knowledge Check!</h3>
+                    <p class="text-lg mb-4">${quest.quiz.question}</p>
+                    <div id="quiz-options" class="grid grid-cols-1 gap-3">${optionsHtml}</div>
+                    <div id="quiz-feedback" class="mt-4 h-10"></div>
+                </div>
+            `;
+        }
+
+        function displayQuest(questId) {
+            const quest = QUEST_DATA[questId];
+            if (!quest) return;
+
+            let contentHtml = `
+                <div class="content-box p-6 md:p-8 rounded-lg">
+                    ${quest.content}
+                    ${renderQuiz(quest)}
+                </div>
+            `;
+            
+            // Add next quest button if it's not the final one
+            if(questId !== 'final' && questId !== 'welcome') {
+                const questIds = Object.keys(QUEST_DATA).filter(id => id !== 'welcome');
+                const currentIndex = questIds.indexOf(questId);
+                const nextQuestId = questIds[currentIndex + 1];
+
+                if(nextQuestId) {
+                    contentHtml += `<div class="text-right mt-6"><button class="btn-primary" onclick="displayQuest('${nextQuestId}')">Next Quest &rarr;</button></div>`;
+                }
+            }
+
+            mainContentEl.innerHTML = contentHtml;
+
+            // Highlight active quest in the log
+            document.querySelectorAll('.quest-card').forEach(card => card.classList.remove('active'));
+            document.querySelector(`.quest-card[data-quest-id="${questId}"]`)?.classList.add('active');
+            
+            // Add event listeners for quiz options with sound
+            if (quest.quiz) {
+                const optionsContainer = document.getElementById('quiz-options');
+                optionsContainer.addEventListener('click', handleQuizClick);
+            }
+        }
+
+        // Update quiz option click handler
+        function handleQuizClick(e) {
+            const button = e.target.closest('.quiz-option');
+            if (!button || button.disabled) return;
+
+            const selectedAnswer = button.dataset.answer;
+            const quest = QUEST_DATA[document.querySelector('.quest-card.active').dataset.questId];
+            const isCorrect = selectedAnswer === quest.quiz.answer;
+            const feedbackEl = document.getElementById('quiz-feedback');
+
+            // Disable all buttons
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.querySelectorAll('.quiz-option').forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.answer === quest.quiz.answer) {
+                    btn.classList.add('correct');
+                } else if (btn === button && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            if (isCorrect) {
+                feedbackEl.innerHTML = `<p class="text-green-400 font-bold">Perfect! Quest Updated!</p>`;
+            } else {
+                feedbackEl.innerHTML = `<p class="text-red-400 font-bold">Try Again! The correct answer is marked in green.</p>`;
+            }
+        }
+
+        function initialize() {
+            // Populate the quest log
+            let questLogHtml = '';
+            for (const questId in QUEST_DATA) {
+                if (questId === 'welcome') continue; // Skip welcome message in log
+                const quest = QUEST_DATA[questId];
+                questLogHtml += `
+                    <div class="quest-card p-4 rounded-lg cursor-pointer flex items-center gap-4" data-quest-id="${questId}">
+                        <span class="text-3xl">${quest.icon}</span>
+                        <div>
+                            <h3 class="font-semibold text-lg">${quest.title}</h3>
+                        </div>
+                    </div>
+                `;
+            }
+            questLogEl.innerHTML = questLogHtml;
+
+            // Add click listeners to quest cards
+            document.querySelectorAll('.quest-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    displayQuest(card.dataset.questId);
+                });
+            });
+
+            // Display the initial welcome message
+            displayQuest('welcome');
+        }
+
+        // Start the adventure!
+        initialize();
+
+        // Add theme selector functionality
+        const themeButton = document.getElementById('themeButton');
+        const themeOptions = document.getElementById('themeOptions');
+        const themeOptionElements = document.querySelectorAll('.theme-option');
+
+        // Show/hide theme options
+        themeButton.addEventListener('click', () => {
+            themeOptions.classList.toggle('show');
+        });
+
+        // Hide theme options when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.theme-selector')) {
+                themeOptions.classList.remove('show');
+            }
+        });
+
+        // Theme switching with page refresh
+        themeOptionElements.forEach(option => {
+            option.addEventListener('click', () => {
+                const theme = option.dataset.theme;
+                localStorage.setItem('preferredTheme', theme);
+                window.location.reload(); // Refresh the page
+            });
+        });
+
+        // Apply saved theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('preferredTheme') || 'fighting';
+            document.body.dataset.theme = savedTheme;
+            const selectedOption = document.querySelector(`.theme-option[data-theme="${savedTheme}"]`);
+            if (selectedOption) {
+                themeButton.textContent = selectedOption.textContent.split(' ')[0]; // Remove emoji from button
+            }
+        });
+
+        // Initialize theme immediately (outside DOMContentLoaded)
+        const savedTheme = localStorage.getItem('preferredTheme') || 'fighting';
+        document.body.dataset.theme = savedTheme;
+        const selectedOption = document.querySelector(`.theme-option[data-theme="${savedTheme}"]`);
+        if (selectedOption) {
+            themeButton.textContent = selectedOption.textContent.split(' ')[0]; // Remove emoji from button
+        }
+
+        // Theme selection screen handling
+        const themeSelectScreen = document.getElementById('themeSelectScreen');
+        const mainContent = document.getElementById('mainContent');
+        const themeCards = document.querySelectorAll('.theme-card');
+
+        // Check if theme has been selected before
+        if (!localStorage.getItem('preferredTheme')) {
+            // Show theme selection screen
+            themeSelectScreen.classList.remove('hide');
+            mainContent.classList.remove('show');
+        } else {
+            // Hide theme selection screen and show main content
+            themeSelectScreen.classList.add('hide');
+            mainContent.classList.add('show');
+        }
+
+        // Theme card selection
+        themeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const theme = card.dataset.theme;
+                localStorage.setItem('preferredTheme', theme);
+                document.body.dataset.theme = theme;
+                
+                // Animate transition
+                themeSelectScreen.classList.add('hide');
+                mainContent.classList.add('show');
+                
+                // Update theme button text
+                const themeButton = document.getElementById('themeButton');
+                themeButton.textContent = card.querySelector('.theme-card-title').textContent;
+            });
+        });
+
+        // Ensure content is hidden until theme is selected
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeSelectScreen = document.getElementById('themeSelectScreen');
+            const mainContent = document.getElementById('mainContent');
+            const themeCards = document.querySelectorAll('.theme-card');
+
+            // Always show theme selection screen first
+            mainContent.classList.remove('show');
+            themeSelectScreen.classList.remove('hide');
+
+            // Theme card selection
+            themeCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const theme = card.dataset.theme;
+                    localStorage.setItem('preferredTheme', theme);
+                    document.body.dataset.theme = theme;
+                    
+                    // Animate transition
+                    themeSelectScreen.classList.add('hide');
+                    setTimeout(() => {
+                        mainContent.classList.add('show');
+                    }, 500); // Wait for theme screen to fade out
+                    
+                    // Update theme button text
+                    const themeButton = document.getElementById('themeButton');
+                    themeButton.textContent = card.querySelector('.theme-card-title').textContent;
+                });
+            });
+
+            // Initialize theme if saved
+            const savedTheme = localStorage.getItem('preferredTheme');
+            if (savedTheme) {
+                document.body.dataset.theme = savedTheme;
+                const selectedOption = document.querySelector(`.theme-option[data-theme="${savedTheme}"]`);
+                if (selectedOption) {
+                    const themeButton = document.getElementById('themeButton');
+                    themeButton.textContent = selectedOption.textContent.split(' ')[0];
+                }
+            }
+        });
+    
+    function applyDynamicGridBackground() {
+        const gridColor = getComputedStyle(document.body).getPropertyValue('--grid-color').trim();
+        const svg = `<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M20 0L40 20L20 40L0 20L20 0z" fill="${gridColor}" opacity="0.1"/></svg>`;
+        const encodedSvg = encodeURIComponent(svg);
+        document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("data:image/svg+xml,${encodedSvg}")`;
+    }
+
+    applyDynamicGridBackground();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        applyDynamicGridBackground();
+    });
+
+    const themeOptionsReload = document.querySelectorAll('.theme-option');
+    themeOptionsReload.forEach(option => {
+        option.addEventListener('click', () => {
+            setTimeout(() => applyDynamicGridBackground(), 100);
+        });
+    });
+
+    const themeCardsReload = document.querySelectorAll('.theme-card');
+    themeCardsReload.forEach(card => {
+        card.addEventListener('click', () => {
+            setTimeout(() => applyDynamicGridBackground(), 600);
+        });
+    });
+
+</script>
+</body>
+</html> 
